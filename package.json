@@ -1,0 +1,38 @@
+{
+  "name": "Vue_Net_MySql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Steven <steven012022@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.2"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "dotnet-format": "dotnet format"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.vue": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.css": "prettier --write",
+    "*.json": "prettier --write",
+    "*.cs": "dotnet format ./API/WebApplication1/WebApplication1/WebApplication1.csproj --exclude './API/WebApplication1/WebApplication1/obj/**/*'"
+  }
+}

@@ -1,0 +1,5 @@
+# Run lint-staged for JavaScript, TypeScript, and Vue files
+npx lint-staged
+
+# Full path to dotnet-format
+dotnet format ./API/WebApplication1/WebApplication1/WebApplication1.csproj
