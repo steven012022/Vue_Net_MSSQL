@@ -25,25 +25,32 @@ builder.Services.AddLogging(logging =>
     logging.AddDebug();
 }); // Enable logging services with detailed configuration.
 
-// Configure Swagger/OpenAPI
+// Configure Swagger/OpenAPI (Remove these lines to disable Swagger completely)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Set up CORS (Cross-Origin Resource Sharing)
-app.UseCors(policy =>
-    policy.AllowAnyHeader()
-          .AllowAnyOrigin()
-          .AllowAnyMethod()
-);
-// For production, replace AllowAnyOrigin() with specific origins:
-// policy.WithOrigins("https://example.com")
-
-// Configure HTTP request pipeline
+// Set up CORS (Cross-Origin Resource Sharing) based on the environment
 if (app.Environment.IsDevelopment())
 {
-    // Enable Swagger for development environment
+    app.UseCors(policy =>
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowAnyOrigin() // For development: Allow any origin
+    );
+}
+else
+{
+    app.UseCors(policy =>
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .WithOrigins("https://your-production-frontend.com") // For production: Restrict to specific origin
+    );
+}
+
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -57,7 +64,6 @@ app.MapControllers();
 // Log startup information
 app.Logger.LogInformation("Application is starting...");
 app.Logger.LogInformation("Environment: {Environment}", app.Environment.EnvironmentName);
-app.Logger.LogInformation("DB_PASSWORD length: {Length}", dbPassword.Length);
 
-// Run the application
+// Ensure the app is running properly
 app.Run();
